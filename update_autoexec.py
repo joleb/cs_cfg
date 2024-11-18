@@ -1,4 +1,5 @@
 import os
+import re  # Import the 're' module for regular expressions
 from openai import OpenAI
 
 # Initialize the OpenAI client
