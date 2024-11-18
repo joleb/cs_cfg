@@ -55,23 +55,27 @@ def update_key_binds_file(new_binds):
         # Read the current contents of the file
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
-                lines = file.readlines()
+                contents = file.read()
         else:
-            lines = []
+            contents = ""
 
-        # Remove only the existing key bindings for F2-F11
-        updated_lines = [
-            line for line in lines if not re.match(r'bind "f(2|3|4|5|6|7|8|9|10|11)"', line)
-        ]
+        # Remove the entire block of old key bindings, including the header
+        updated_contents = re.sub(
+            r"// Updated Vegan Cringe Binds\n(?:bind \"f[2-9]|f1[0-1]\".*\n)+",
+            "",
+            contents,
+            flags=re.MULTILINE
+        )
 
-        # Add the new key bindings with proper line breaks
-        updated_lines.append("// Updated Vegan Cringe Binds\n")
-        updated_lines.extend([bind + "\n" for bind in new_binds])  # Ensure each bind is on a new line
-        updated_lines.append("\n")
+        # Create the new block of key bindings
+        new_block = "// Updated Vegan Cringe Binds\n" + "\n".join(new_binds) + "\n"
+
+        # Add the new block to the file contents
+        updated_contents += new_block
 
         # Write the updated contents back to the file
         with open(file_path, 'w') as file:
-            file.writelines(updated_lines)
+            file.write(updated_contents)
 
         print("File updated successfully!")
     except Exception as e:
@@ -90,3 +94,4 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
+    
