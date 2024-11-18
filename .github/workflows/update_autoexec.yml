@@ -12,7 +12,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,8 +33,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "joleb"
+          git config user.email "38313415+joleb@users.noreply.github.com"
           git add autoexec.cfg
           git commit -m "Update autoexec.cfg with new key binds" || echo "No changes to commit"
           git push
