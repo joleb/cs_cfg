@@ -1,21 +1,17 @@
-import openai
 import os
-import re
+from openai import OpenAI
 
-# Set your OpenAI API key from the environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Initialize the OpenAI client
+client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY")  # Using environment variable for the API key
+)
 
 # Function to fetch new key binds from the ChatGPT API
 def fetch_new_key_binds():
     try:
-        # Use the new Chat API format
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        # Use the new API call format
+        chat_completion = client.chat.completions.create(
             messages=[
-                {
-                    "role": "system",
-                    "content": "You are a script that generates cringe-worthy vegan-themed key bindings for CS:GO."
-                },
                 {
                     "role": "user",
                     "content": (
@@ -31,13 +27,14 @@ def fetch_new_key_binds():
                         "bind \"f10\" \"say If I served that kill on a plate, it’d come with a side of hummus and a vegan pat on the back.\"\n"
                         "bind \"f11\" \"say They said plants can’t fight back. Looks like I just proved them wrong!\"\n"
                         "Make sure to follow this format exactly."
-                    )
+                    ),
                 }
-            ]
+            ],
+            model="gpt-4o"  # Model identifier
         )
 
         # Extract the response text from the choices
-        new_binds_text = response['choices'][0]['message']['content']
+        new_binds_text = chat_completion.choices[0].message.content
         # Split the binds by new lines to get them as a list
         new_binds = [line for line in new_binds_text.split('\n') if line.startswith('bind')]
 
@@ -45,7 +42,7 @@ def fetch_new_key_binds():
 
     except Exception as e:
         print(f"Error fetching key binds from ChatGPT: {e}")
-        return []
+        raise  # Re-raise the exception to ensure the workflow fails
 
 # Function to update key binds in the file
 def update_key_binds_file(new_binds):
@@ -75,6 +72,7 @@ def update_key_binds_file(new_binds):
         print("File updated successfully!")
     except Exception as e:
         print(f"Error writing to file: {e}")
+        raise  # Re-raise the exception to ensure the workflow fails
 
 # Main function
 def main():
@@ -83,6 +81,7 @@ def main():
         update_key_binds_file(new_binds)
     else:
         print("Failed to fetch new key binds. Exiting.")
+        raise RuntimeError("No key binds fetched")
 
 # Run the main function
 if __name__ == "__main__":
