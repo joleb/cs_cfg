@@ -2,7 +2,7 @@ name: Update Autoexec
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs every day at midnight (00:00 UTC). Adjust the time if needed.
+    - cron: "0 0 * * *"  # Runs every day at midnight (00:00 UTC)
 
   workflow_dispatch:  # Allows you to run the action manually from the GitHub UI
 
@@ -29,9 +29,12 @@ jobs:
       - name: Run the update script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python update_autoexec.py
+        run: |
+          set -e  # Ensure the script stops on error
+          python update_autoexec.py
 
       - name: Commit and push changes
+        if: success()  # Only run if the previous step was successful
         run: |
           git config --global user.name "joleb"
           git config user.email "38313415+joleb@users.noreply.github.com"
