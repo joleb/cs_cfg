@@ -46,6 +46,6 @@ jobs:
         run: |
           git config --global user.name "joleb"
           git config user.email "38313415+joleb@users.noreply.github.com"
-          git add autoexec.cfg
-          git commit -m "Update autoexec.cfg with new key binds" || echo "No changes to commit"
+          git add bindings.cfg
+          git commit -m "Update bindings.cfg with new key binds" || echo "No changes to commit"
           git push
