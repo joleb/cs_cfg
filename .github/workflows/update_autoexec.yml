@@ -1,0 +1,38 @@
+name: Update Autoexec
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs every day at midnight (00:00 UTC). Adjust the time if needed.
+
+  workflow_dispatch:  # Allows you to run the action manually from the GitHub UI
+
+jobs:
+  update_autoexec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai
+
+      - name: Run the update script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python update_autoexec.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add autoexec.cfg
+          git commit -m "Update autoexec.cfg with new key binds" || echo "No changes to commit"
+          git push
