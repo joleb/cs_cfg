@@ -30,7 +30,7 @@ def fetch_new_key_binds():
                     ),
                 }
             ],
-            model="gpt-4o"  # Model identifier
+            model="gpt-4o-mini"  # Model identifier
         )
 
         # Extract the response text from the choices
