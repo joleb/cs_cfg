@@ -65,13 +65,13 @@ def update_key_binds_file(new_binds):
             "",
             contents,
             flags=re.MULTILINE
-        )
+        ).strip()  # Remove any extra whitespace from the end
 
         # Create the new block of key bindings
         new_block = "// Updated Vegan Cringe Binds\n" + "\n".join(new_binds) + "\n"
 
-        # Add the new block to the file contents
-        updated_contents += new_block
+        # Replace or append the new block to the file contents
+        updated_contents = new_block
 
         # Write the updated contents back to the file
         with open(file_path, 'w') as file:
@@ -80,7 +80,7 @@ def update_key_binds_file(new_binds):
         print("File updated successfully!")
     except Exception as e:
         print(f"Error writing to file: {e}")
-        raise  # Re-raise the exception to ensure the workflow fails
+        raise
 
 # Main function
 def main():
@@ -94,4 +94,3 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
-    
