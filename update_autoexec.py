@@ -58,12 +58,14 @@ def update_key_binds_file(new_binds):
         else:
             lines = []
 
-        # Remove existing key bindings for F2-F11
-        updated_lines = [line for line in lines if not re.match(r'bind "f[2-9]|f1[0-1]"', line)]
+        # Remove only the existing key bindings for F2-F11
+        updated_lines = [
+            line for line in lines if not re.match(r'bind "f(2|3|4|5|6|7|8|9|10|11)"', line)
+        ]
 
-        # Add the new key bindings
+        # Add the new key bindings with proper line breaks
         updated_lines.append("// Updated Vegan Cringe Binds\n")
-        updated_lines.extend(new_binds)
+        updated_lines.extend([bind + "\n" for bind in new_binds])  # Ensure each bind is on a new line
         updated_lines.append("\n")
 
         # Write the updated contents back to the file
