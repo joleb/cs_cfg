@@ -13,26 +13,24 @@ def fetch_new_key_binds():
         chat_completion = client.chat.completions.create(
             messages=[
                 {
-                    "role": "system",
-                    "content": "You are a script that generates cringe-worthy vegan-themed key bindings for Counter-Strike. They should be very, very cringe."
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        "Create 10 new vegan-themed key bindings for F2 to F11 in the following format:\n"
-                        "bind \"f2\" \"say Don't worry, my vegan bullets are free-range and locally sourced. You’re welcome.\"\n"
-                        "bind \"f3\" \"say You just got fricassé-ed, vegan style! #TofuOwnsYou\"\n"
-                        "bind \"f4\" \"say Sorry, did my plant-based performance intimidate you? Maybe some meat-free meditation will help.\"\n"
-                        "bind \"f5\" \"say That headshot? 100% organic, zero emissions, and carbon-neutral.\"\n"
-                        "bind \"f6\" \"say This game should come with a warning: May contain traces of vegan domination.\"\n"
-                        "bind \"f7\" \"say It's not just a game; it's a plant-based massacre. Get rekt with respect, my dude.\"\n"
-                        "bind \"f8\" \"say Consider this an eco-friendly frag. Recycle your strategy, because that one failed.\"\n"
-                        "bind \"f9\" \"say Even kale would have dodged that shot, and it doesn't even have reflexes.\"\n"
-                        "bind \"f10\" \"say If I served that kill on a plate, it’d come with a side of hummus and a vegan pat on the back.\"\n"
-                        "bind \"f11\" \"say They said plants can’t fight back. Looks like I just proved them wrong!\""
-                    )
-                }
-            ],
+                        "role": "system",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "You are a script that generates cringe-worthy vegan-themed key bindings for Counter strike they should be very very cringe"
+                            }
+                        ]
+                        },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "you should create 10 new vegan very cringey bindings, which i can use in my autoexec with the following format from f2 to f11\n\nbind \"f2\" \"say Don't worry, my vegan bullets are free-range and locally sourced. You’re welcome.\"\nbind \"f3\" \"say You just got fricassé-ed, vegan style! #TofuOwnsYou\"\nbind \"f4\" \"say Sorry, did my plant-based performance intimidate you? Maybe some meat-free meditation will help.\"\nbind \"f5\" \"say That headshot? 100% organic, zero emissions, and carbon-neutral.\"\nbind \"f6\" \"say This game should come with a warning: May contain traces of vegan domination.\"\nbind \"f7\" \"say It's not just a game; it's a plant-based massacre. Get rekt with respect, my dude.\"\nbind \"f8\" \"say Consider this an eco-friendly frag. Recycle your strategy, because that one failed.\"\nbind \"f9\" \"say Even kale would have dodged that shot, and it doesn't even have reflexes.\"\nbind \"f10\" \"say If I served that kill on a plate, it’d come with a side of hummus and a vegan pat on the back.\"\nbind \"f11\" \"say They said plants can’t fight back. Looks like I just proved them wrong!\""
+                            }
+                        ]
+                    }
+            ], 
             model="gpt-4o-mini"  # Model identifier
         )
 
