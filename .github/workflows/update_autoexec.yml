@@ -44,8 +44,8 @@ jobs:
       - name: Commit and push changes
         if: success()  # Only run if the previous step was successful
         run: |
-          git config --global user.name "${{ secrets.USERNAME}}"
-          git config user.email ${{ secrets.USEREMAIL }}
+          git config --global user.name "${{ secrets.USER_NAME}}"
+          git config user.email ${{ secrets.USER_EMAIL }}
           git add bindings.cfg
           git commit -m "Update bindings.cfg with new key binds" || echo "No changes to commit"
           git push
