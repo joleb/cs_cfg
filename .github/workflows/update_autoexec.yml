@@ -1,9 +1,6 @@
 name: Update Autoexec
 
-on:
-  schedule:
-    - cron: "0 0 * * *"  # Runs every day at midnight (00:00 UTC)
-
+on: 
   workflow_dispatch:  # Allows you to run the action manually from the GitHub UI
 
 jobs:
